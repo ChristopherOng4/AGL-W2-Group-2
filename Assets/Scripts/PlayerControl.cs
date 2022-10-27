@@ -9,7 +9,8 @@ public class PlayerControl : MonoBehaviour {
 
     public KeyCode left;
     public KeyCode right;
-    public KeyCode jump; 
+    public KeyCode jump;
+    public KeyCode shoot;
 
     private Rigidbody2D theRB;
 
@@ -19,10 +20,17 @@ public class PlayerControl : MonoBehaviour {
 
     public bool isGrounded;
 
+    private Animator anim;
+
+    public GameObject bullet;
+    public Transform firePoint;
+
     // Start is called before the first frame update
     void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
+
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -47,5 +55,25 @@ public class PlayerControl : MonoBehaviour {
         {
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
         }
+
+        if(Input.GetKeyDown(shoot)) 
+        {
+            GameObject bulletClone = (GameObject)Instantiate(bullet, firePoint.position, firePoint.rotation);
+            bulletClone.transform.localScale = transform.localScale / 5;
+            anim.SetTrigger("Shoot");
+        }
+
+        if (theRB.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (theRB.velocity.x > 0) 
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        } 
+
+        anim.SetFloat("Speed", Mathf.Abs(theRB.velocity.x));
+        anim.SetBool("Grounded", isGrounded);
+
     }
 }
