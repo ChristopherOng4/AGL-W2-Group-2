@@ -59,7 +59,7 @@ public class PlayerControl : MonoBehaviour {
         if(Input.GetKeyDown(shoot)) 
         {
             GameObject bulletClone = (GameObject)Instantiate(bullet, firePoint.position, firePoint.rotation);
-            bulletClone.transform.localScale = transform.localScale / 5;
+            bulletClone.transform.localScale = transform.localScale / 3;
             anim.SetTrigger("Shoot");
         }
 
