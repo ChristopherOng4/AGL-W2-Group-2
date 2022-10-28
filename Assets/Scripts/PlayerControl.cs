@@ -35,6 +35,10 @@ public class PlayerControl : MonoBehaviour {
         HealthSystem.OnPlayerDeath -= DisablePlayerMovement; 
     }
 
+    [SerializeField] private AudioSource jumpSoundEffect;
+
+    [SerializeField] private AudioSource fireSoundEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,11 +69,13 @@ public class PlayerControl : MonoBehaviour {
 
         if(Input.GetKeyDown(jump) && isGrounded) 
         {
+            jumpSoundEffect.Play();
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
         }
 
         if(Input.GetKeyDown(shoot)) 
         {
+            fireSoundEffect.Play();
             GameObject bulletClone = (GameObject)Instantiate(bullet, firePoint.position, firePoint.rotation);
             bulletClone.transform.localScale = transform.localScale / 3;
             anim.SetTrigger("Shoot");
