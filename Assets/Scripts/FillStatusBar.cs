@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class FillStatusBar : MonoBehaviour
 
 {
-    
     public HealthSystem playerHealth;
     public Image fillImage;
     private Slider slider;  
@@ -19,17 +18,19 @@ public class FillStatusBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (slider.value <= slider.minValue)
         { 
             fillImage.enabled = false; 
         }
 
-        if (slider.value > slider.minValue && !(fillImage.enabled)) 
+        if (slider.value > slider.minValue && !fillImage.enabled) 
         {
             fillImage.enabled = true; 
         }
         
         float fillValue = playerHealth.currentHealth / playerHealth.maxHealth;
+        
         slider.value = fillValue; 
     }
 }
