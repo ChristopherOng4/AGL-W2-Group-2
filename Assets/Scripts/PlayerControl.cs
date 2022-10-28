@@ -25,12 +25,24 @@ public class PlayerControl : MonoBehaviour {
     public GameObject bullet;
     public Transform firePoint;
 
+    private void OnEnable() 
+    {
+        HealthSystem.OnPlayerDeath += DisablePlayerMovement; 
+    }
+
+    private void OnDisable() 
+    {
+        HealthSystem.OnPlayerDeath -= DisablePlayerMovement; 
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
 
         anim = GetComponent<Animator>();
+
+        EnablePlayerMovement();
     }
 
     // Update is called once per frame
@@ -75,5 +87,17 @@ public class PlayerControl : MonoBehaviour {
         anim.SetFloat("Speed", Mathf.Abs(theRB.velocity.x));
         anim.SetBool("Grounded", isGrounded);
 
+    }
+
+    private void DisablePlayerMovement() 
+    {
+        anim.enabled = false; 
+        theRB.bodyType = RigidbodyType2D.Static; 
+    }
+
+    private void EnablePlayerMovement() 
+    {
+        anim.enabled = false; 
+        theRB.bodyType = RigidbodyType2D.Dynamic; 
     }
 }
